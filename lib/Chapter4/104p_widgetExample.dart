@@ -67,15 +67,27 @@ class _WidgetExampleState extends State<WidgetApp> {
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.add),
-                      Text('더하기')
+                      Text(_buttonText!)
                     ],
                   ),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.amber)),
 
                   onPressed: () {
                     setState(() {
-                        int result = int.parse(value1.value.text) + int.parse(value2.value.text);
-                        sum = '$result';
+                      var valueInt = double.parse(value1.value.text);
+                      var value2Int = double.parse(value2.value.text);
+                      var result;
+
+                      if(_buttonText == '더하기'){
+                        result = valueInt + value2Int;
+                      } else if (_buttonText == '빼기') {
+                        result = valueInt - value2Int;
+                      } else if (_buttonText == '곱하기') {
+                        result = valueInt * value2Int;
+                      } else {
+                        result = valueInt / value2Int;
+                      }
+                      sum = '$result';
                     });
                   },)
               ),
@@ -95,15 +107,15 @@ class _WidgetExampleState extends State<WidgetApp> {
         ),
       ),
     );
+  }
 
-    @override
-    void initState() {
-      super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-      for (var item in _buttonList) {
-          _dropDownMenuItems.add(DropdownMenuItem(value: item, child: Text(item)));
-      }
-      _buttonText = _dropDownMenuItems[0].value;
+    for (var item in _buttonList) {
+      _dropDownMenuItems.add(DropdownMenuItem(value: item, child: Text(item)));
     }
+    _buttonText = _dropDownMenuItems[0].value;
   }
 }
